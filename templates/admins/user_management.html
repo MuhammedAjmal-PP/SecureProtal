@@ -1,0 +1,145 @@
+{% extends "admins/admin_base.html" %}
+{% block title %}Users | Admin Portal{% endblock %}
+{% block content %}
+    <header class="dashboard-header mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h1 class="dashboard-title">
+                    <i class="fas fa-users me-2"></i> {{ page_title }}
+                </h1>
+                <p class="dashboard-subtitle text-muted">
+                    Showing users {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ total_users }} accounts.
+                </p>
+            </div>
+            <a href="{% url "add_user" %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-plus me-2"></i> Create User
+            </a>
+        </div>
+        <form method="GET" class="input-group" action="{% url 'users' %}">
+            <input type="search"
+                   name="q"
+                   class="form-control form-control-lg"
+                   placeholder="Search by username, email, or name..."
+                   value="{{ query|default:'' }}">
+            <input type="hidden" name="order_by" value="{{ current_order }}">
+            <button class="btn btn-outline-secondary" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+            {% if query %}
+                <a href="{% url 'users' %}" class="btn btn-outline-danger"><i class="fas fa-times"></i> Clear</a>
+            {% endif %}
+        </form>
+    </header>
+    <div class="admin-table-container shadow-sm mb-4">
+        <div class="table-responsive">
+            <table class="table table-hover admin-table">
+                <thead>
+                    <tr>
+                        {% comment %} ORDERING/FILTERING LINKS (Passing query parameter) {% endcomment %}
+                        {% url 'users' as users_url %}
+                        <th scope="col">
+                            <a href="{{ users_url }}?order_by={% if current_order == 'username' %}-username{% else %}username{% endif %}{% if query %}&q={{ query }}{% endif %}"
+                               class="text-decoration-none">
+                                Username <i class="fas fa-sort{% if current_order == 'username' %}-up{% elif current_order == '-username' %}-down{% endif %} ms-1"></i>
+                            </a>
+                        </th>
+                        <th scope="col">
+                            <a href="{{ users_url }}?order_by={% if current_order == 'email' %}-email{% else %}email{% endif %}{% if query %}&q={{ query }}{% endif %}"
+                               class="text-decoration-none">
+                                Email <i class="fas fa-sort{% if current_order == 'email' %}-up{% elif current_order == '-email' %}-down{% endif %} ms-1"></i>
+                            </a>
+                        </th>
+                        <th scope="col">Status</th>
+                        <th scope="col">
+                            <a href="{{ users_url }}?order_by={% if current_order == 'date_joined' %}-date_joined{% else %}date_joined{% endif %}{% if query %}&q={{ query }}{% endif %}"
+                               class="text-decoration-none">
+                                Joined <i class="fas fa-sort{% if current_order == 'date_joined' %}-up{% elif current_order == '-date_joined' %}-down{% endif %} ms-1"></i>
+                            </a>
+                        </th>
+                        <th scope="col">Last Login</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in page_obj.object_list %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'profile' user.pk %}"
+                                   class="text-primary fw-bold text-decoration-none">{{ user.username }}</a>
+                            </td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                {% if user.is_active %}
+                                    <span class="badge bg-success">Active</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Inactive</span>
+                                {% endif %}
+                                {% if user.is_superuser %}
+                                    <span class="badge bg-primary ms-2">Admin</span>
+                                {% elif user.is_staff %}
+                                    <span class="badge bg-secondary ms-2">Staff</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ user.date_joined|date:"M j, Y - H:i" }}</td>
+                            <td>{{ user.last_login|default:"Never"|date:"M j, Y - H:i" }}</td>
+                            <td>
+                                <a href="{% url 'profile' user.pk %}"
+                                   class="btn btn-sm btn-outline-primary me-2">
+                                    <i class="fas fa-eye"></i> View/Edit
+                                </a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">No users match your criteria.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% if page_obj.has_other_pages %}
+        <nav aria-label="User list navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+                    <a class="page-link"
+                       {% if page_obj.has_previous %} href="{% url 'users' %}?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}
+                       {% if current_order %}&order_by={{ current_order }}{% endif %}
+                       "
+                       {% else %}
+                       href="#"
+                       {% endif %}
+                       aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span> Previous
+                    </a>
+                </li>
+                {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">{{ i }}</span>
+                        </li>
+                    {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="{% url 'users' %}?page={{ i }}{% if query %}&q={{ query }}{% endif %}{% if current_order %}&order_by={{ current_order }}{% endif %}">
+                                {{ i }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
+                    <a class="page-link"
+                       {% if page_obj.has_next %} href="{% url 'users' %}?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}
+                       {% if current_order %}&order_by={{ current_order }}{% endif %}
+                       "
+                       {% else %}
+                       href="#"
+                       {% endif %}
+                       aria-label="Next">
+                        Next <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock content %}

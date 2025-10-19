@@ -80,14 +80,21 @@ WSGI_APPLICATION = "secureportal.wsgi.application"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 # Database Configuration (PostgreSQL)
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": os.getenv("DB_NAME"),
+#         "USER": os.getenv("DB_USER"),
+#         "PASSWORD": os.getenv("DB_PASSWORD"),
+#         "HOST": os.getenv("DB_HOST"),
+#         "PORT": os.getenv("DB_PORT"),
+#     }
+# }
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME"),
-        "USER": os.getenv("DB_USER"),
-        "PASSWORD": os.getenv("DB_PASSWORD"),
-        "HOST": os.getenv("DB_HOST"),
-        "PORT": os.getenv("DB_PORT"),
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -136,3 +143,27 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "welcome"
+
+
+# =========================================================
+# SESSION MANAGEMENT & SECURITY
+# =========================================================
+
+# Session Timeout (e.g., 30 minutes of inactivity)
+# The value is in seconds. (30 minutes * 60 seconds/minute = 1800)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 1800 
+
+# If set to True, session age resets with every request (sliding expiration)
+# If False, the session always expires after SESSION_COOKIE_AGE seconds regardless of activity.
+SESSION_SAVE_EVERY_REQUEST = True
+
+
+# Ensures the cookie can only be accessed via HTTP(S) protocol, not JavaScript.
+SESSION_COOKIE_HTTPONLY = True 
+
+# Ensures the cookie is only sent over HTTPS connections (VITAL for production)
+SESSION_COOKIE_SECURE = False # Set to True in production!
+
+# Prevents the cookie from being sent in cross-site requests (CSRF protection)
+SESSION_COOKIE_SAMESITE = 'Lax'

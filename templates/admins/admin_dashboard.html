@@ -1,0 +1,78 @@
+{% extends "admins/admin_base.html" %}
+
+{% block title %}Dashboard | Admin Portal{% endblock %}
+
+{% block content %}
+    <header class="dashboard-header mb-5">
+        <h1 class="dashboard-title">
+            <i class="fas fa-chart-line me-2" style="color: var(--color-primary);"></i> 
+            {{ page_title|default:"Dashboard Overview" }}
+        </h1>
+        <p class="dashboard-subtitle text-muted">Key metrics and recent activity across your SecurePortal instance.</p>
+    </header>
+
+    <div class="row g-4 mb-5">
+        
+        <div class="col-xl-3 col-md-6">
+            <div class="info-card primary-card shadow-sm">
+                <h3 class="card-title text-dark mb-3"><i class="fas fa-users me-2"></i> Total Users</h3>
+                <h2 class="metric-number mb-2">{{ user_count|default:"0" }}</h2>
+                <p class="text-muted small">All registered accounts.</p>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="info-card secondary-card shadow-sm">
+                <h3 class="card-title text-dark mb-3"><i class="fas fa-user-plus me-2"></i> New Signups (30D)</h3>
+                <h2 class="metric-number mb-2" style="color: var(--color-secondary);">{{ new_signups_30d|default:"0" }}</h2>
+                <p class="text-muted small">Registered in the last 30 days.</p>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="info-card primary-card shadow-sm">
+                <h3 class="card-title text-dark mb-3"><i class="fas fa-exclamation-triangle me-2"></i> Incidents</h3>
+                <h2 class="metric-number mb-2 text-danger">{{ security_incidents|default:"0" }}</h2>
+                <p class="text-muted small">Requires immediate attention.</p>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6">
+            <div class="info-card secondary-card shadow-sm">
+                <h3 class="card-title text-dark mb-3"><i class="fas fa-server me-2"></i> System Uptime</h3>
+                <h2 class="metric-number mb-2" style="color: var(--color-success);">{{ system_uptime|default:"N/A" }}</h2>
+                <p class="text-muted small">All services operational.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="admin-table-container shadow-sm">
+                <h3 class="card-title text-dark mb-4"><i class="fas fa-clock me-2"></i> Recent Activity (New Users)</h3>
+                
+                <ul class="list-group list-group-flush activity-list">
+                    {% for user in recent_users %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-user-check me-2 text-success"></i> New Account Created: <strong>{{ user.username|capfirst }}</strong> ({{ user.email }})
+                            </div>
+                            <small class="text-muted">{{ user.date_joined|date:"M j, Y - H:i" }}</small>
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item text-center text-muted">No recent user signups found.</li>
+                    {% endfor %}
+                    
+                    {% if request.user.is_authenticated %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                         <div>
+                            <i class="fas fa-lock me-2 text-warning"></i> Successful Admin Login: **{{ request.user.username|capfirst }}**
+                        </div>
+                        <small class="text-muted">Just now (via {{ request.META.REMOTE_ADDR|default:"Localhost" }})</small>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

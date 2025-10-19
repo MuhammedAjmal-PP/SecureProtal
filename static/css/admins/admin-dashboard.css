@@ -1,0 +1,162 @@
+/* =======================================
+ * Admin Dashboard - FULL STYLESHEET
+ * Combines Layout, Sidebar, and Component Styles
+ * ======================================= */
+
+/* Theme Colors */
+:root {
+    --color-primary: #4B0082;     /* Indigo/Violet */
+    --color-secondary: #FF8C00;    /* Dark Orange */
+    --color-background: #f4f7f6;  /* Light gray background for main area */
+    --color-surface: #ffffff;      /* White card background */
+    --color-text-muted: #6c757d;   /* Gray text */
+    --color-success: #28a745;     /* Green */
+    --color-danger: #dc3545;      /* Red */
+}
+
+/* --- General Layout & Base --- */
+body, html {
+    overflow-x: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--color-background);
+}
+
+/* --- Sidebar Layout --- */
+#sidebar-wrapper {
+    min-height: 100vh;
+    margin-left: -15rem;
+    transition: margin 0.25s ease-out;
+    width: 15rem;
+}
+
+/* Page Content Wrapper */
+#page-content-wrapper {
+    min-width: 100vw;
+}
+
+/* Sidebar Toggle State */
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+}
+
+@media (min-width: 992px) {
+    #sidebar-wrapper {
+        margin-left: 0;
+    }
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: -15rem;
+    }
+}
+
+/* Branding in Sidebar (Reusing gradient) */
+.sidebar-heading {
+    border-bottom: 1px solid #eee;
+}
+.brand-logo-small {
+    font-size: 1.5rem;
+    font-weight: 800;
+    /* Gradient Color */
+    background: linear-gradient(to right, var(--color-primary), var(--color-secondary)); 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Sidebar Links */
+.list-group-item {
+    border: none;
+    border-radius: 0;
+    font-weight: 500;
+    color: #495057;
+    transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover, .list-group-item.active {
+    background-color: #f0f3f6;
+    color: var(--color-primary);
+}
+.list-group-item.active {
+    border-left: 3px solid var(--color-primary);
+}
+
+
+/* --- Dashboard Header --- */
+.dashboard-header {
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.dashboard-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #343a40;
+}
+
+/* --- Card Styles (KPIs) --- */
+
+.info-card {
+    background-color: var(--color-surface);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+    height: 100%; 
+}
+
+.info-card:hover {
+    transform: translateY(-3px);
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #495057;
+}
+
+/* Card Borders (Branding accent) */
+.primary-card {
+    border-left: 5px solid var(--color-primary); /* Indigo/Violet border */
+}
+
+.secondary-card {
+    border-left: 5px solid var(--color-secondary); /* Dark Orange border */
+}
+
+/* --- Metric Numbers --- */
+
+.metric-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-primary); 
+}
+
+/* --- Recent Activity List Styling --- */
+
+.admin-table-container {
+    background-color: var(--color-surface);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden; 
+}
+
+.activity-list {
+    margin-bottom: 0;
+}
+
+.activity-list .list-group-item {
+    border-color: #f0f2f5;
+    color: #343a40;
+}
+
+.activity-list .list-group-item:first-child {
+    border-top: none;
+}
+.activity-list .list-group-item:last-child {
+    border-bottom: none;
+}
