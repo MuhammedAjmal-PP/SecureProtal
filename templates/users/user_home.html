@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SecurePortal -
+            {% block title %}
+                Dashboard | SecurePortal
+            {% endblock title %}
+        </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+              rel="stylesheet">
+        <link rel="stylesheet"
+              href="{% static 'css/users/user_dashboard-style.css' %}">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    </head>
+    <body>
+        <div class="d-flex" id="wrapper">
+            <div class="bg-white border-end sidebar-wrapper" id="sidebar-wrapper">
+                <div class="sidebar-heading p-4 text-center">
+                    <h2 class="brand-logo-small">SecurePortal</h2>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="#" class="list-group-item list-group-item-action p-3 active"><i class="fas fa-home me-2"></i> Dashboard Home</a>
+                    <a href="#" class="list-group-item list-group-item-action p-3"><i class="fas fa-cogs me-2"></i> Profile Settings</a>
+                    <a href="#" class="list-group-item list-group-item-action p-3"><i class="fas fa-history me-2"></i> Activity Log</a>
+                    <a href="{% url 'logout' %}"
+                       class="list-group-item list-group-item-action p-3 text-danger"><i class="fas fa-sign-out-alt me-2"></i> Log Out</a>
+                </div>
+            </div>
+            <div id="page-content-wrapper">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <div class="container-fluid">
+                        <button class="btn btn-outline-secondary" id="sidebarToggle">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle"
+                                       href="#"
+                                       id="navbarDropdown"
+                                       role="button"
+                                       data-bs-toggle="dropdown"
+                                       aria-expanded="false">
+                                        {% if user.is_authenticated %}
+                                            {{ user.username|capfirst }}
+                                        {% else %}
+                                            Guest User
+                                        {% endif %}
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end"
+                                        aria-labelledby="navbarDropdown">
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-2"></i> Log Out</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div class="container-fluid p-4">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show"
+                                 role="alert">
+                                {{ message }}
+                                <button type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <section class="dashboard-layout">
+                        <header class="dashboard-header mb-4">
+                            <h1 class="dashboard-title">
+                                Welcome Back, <span class="highlight-text">{{ user.username|capfirst }}</span>
+                            </h1>
+                            <p class="dashboard-subtitle text-muted">This is your SecurePortal control center.</p>
+                        </header>
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="info-card p-4 border rounded shadow-sm primary-card"
+                                     style="border-left: 5px solid #4B0082">
+                                    <h3 class="card-title text-dark mb-3">
+                                        <i class="fas fa-user-circle me-2" style="color:#4B0082;"></i> Account Status
+                                    </h3>
+                                    <p>
+                                        <strong>Email:</strong> {{ user.email }}
+                                    </p>
+                                    <p>
+                                        <strong>Joined:</strong> {{ user.date_joined|date:"F j, Y" }}
+                                    </p>
+                                    <a href="#" class="card-link text-decoration-none" style="color:#FF8C00">Update Profile Settings →</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="info-card p-4 border rounded shadow-sm secondary-card"
+                                     style="border-left: 5px solid #FF8C00">
+                                    <h3 class="card-title text-dark mb-3">
+                                        <i class="fas fa-shield-alt me-2" style="color:#FF8C00;"></i> Security & Activity
+                                    </h3>
+                                    <p>
+                                        <strong>Last Login:</strong> {{ user.last_login|default:"Never" }}
+                                    </p>
+                                    <p>
+                                        <strong>Password Security:</strong> High
+                                    </p>
+                                    <a href="#" class="card-link text-decoration-none" style="color:#4B0082">Change Password →</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="info-card p-4 border rounded shadow-sm full-width-card"
+                                     style="border-left: 5px solid #8A2BE2">
+                                    <h3 class="card-title text-dark mb-3">
+                                        <i class="fas fa-bolt me-2" style="color:#8A2BE2;"></i> Quick Actions
+                                    </h3>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <a href="#" class="btn btn-outline-dark btn-sm"><i class="fas fa-file-invoice me-1"></i> Billing</a>
+                                        <a href="#" class="btn btn-outline-dark btn-sm"><i class="fas fa-bell me-1"></i> Notifications</a>
+                                        <a href="#" class="btn btn-outline-dark btn-sm"><i class="fas fa-question-circle me-1"></i> Support</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dashboard-footer-action mt-5">
+                            <a href="{% url 'logout' %}" class="btn btn-danger btn-lg shadow">
+                                <i class="fas fa-sign-out-alt me-2"></i> Log Out Securely
+                            </a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+    document.getElementById("sidebarToggle").onclick = function () {
+        document.getElementById("wrapper").classList.toggle("toggled");
+    };
+        </script>
+    </body>
+</html>

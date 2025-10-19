@@ -1,0 +1,56 @@
+{% extends "users/user_base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}
+  User Login
+{% endblock title %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/users/user_login-style.css' %}" />
+{% endblock extra_css %}
+{% block content %}
+  <style>.navbar { display: none; }</style>
+  <div class="login-container d-flex justify-content-center align-items-center vh-100">
+    <div class="login-card p-4 p-md-5 shadow-lg rounded-3">
+      <div class="text-center mb-4">
+        <h1 class="brand-logo mb-1">SecurePortal</h1>
+        <p class="text-muted">Sign in to your account</p>
+      </div>
+      <form method="post" class="auth-form">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger" role="alert">
+            {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+          </div>
+        {% endif %}
+        {% for field in form %}
+          <div class="mb-3">
+            <div class="input-group input-group-lg">
+              <span class="input-group-text">
+                {% if field.name == 'username' or field.name == 'email' %}
+                  <i class="fas fa-user"></i>
+                {% elif field.name == 'password' %}
+                  <i class="fas fa-lock"></i>
+                {% else %}
+                  <i class="fas fa-edit"></i>
+                {% endif %}
+              </span>
+              {{ field }}
+            </div>
+            {% for error in field.errors %}<small class="text-danger d-block mt-1">{{ error }}</small>{% endfor %}
+            {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text|safe }}</small>{% endif %}
+          </div>
+        {% endfor %}
+        <div class="d-flex justify-content-between align-items-center mb-4 small">
+          <a href="#" class="text-decoration-none forgot-link">Forgot Password?</a>
+        </div>
+        <button type="submit" class="btn btn-login w-100 btn-lg mb-3 shadow">
+          <i class="fas fa-sign-in-alt me-2"></i> Log In
+        </button>
+      </form>
+      <p class="text-center mt-3 text-muted">
+        Don't have an account?
+        <a href="{% url 'signup' %}" class="text-decoration-none signup-link">Sign Up</a>
+      </p>
+    </div>
+  </div>
+{% endblock content %}

@@ -1,0 +1,136 @@
+/* =======================================
+ * SecurePortal Theme - Dashboard and Base Styles (dashboards-style.css)
+ * Used by user_home.html and the navbar in user_base.html
+ * ======================================= */
+
+:root {
+    --color-primary: #4B0082; /* Indigo/Violet */
+    --color-secondary: #FF8C00; /* Dark Orange */
+    --color-background-dark: #f4f7f6; /* Light gray background for main area */
+    --color-surface: #ffffff;
+    --color-border: #eee;
+    --color-text-dark: #212529;
+}
+
+/* ----------------------------------
+ * BASE NAVIGATION STYLES (for user_base.html)
+ * ---------------------------------- */
+/* Branding in Navbar/Sidebar */
+.brand-logo-small {
+    font-size: 1.5rem;
+    font-weight: 800;
+    /* Gradient Color */
+    background: linear-gradient(to right, var(--color-primary), var(--color-secondary)); 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Base Nav Links (used in user_base.html) */
+.nav-link {
+    color: var(--color-text-dark) !important;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: var(--color-primary) !important;
+}
+
+.logout-link {
+    color: #dc3545 !important; /* Red color for logout */
+}
+
+/* ----------------------------------
+ * DASHBOARD LAYOUT (for user_home.html)
+ * ---------------------------------- */
+body {
+    background-color: var(--color-background-dark);
+}
+#wrapper {
+    overflow-x: hidden;
+}
+
+/* Sidebar Wrapper */
+#sidebar-wrapper {
+    min-height: 100vh;
+    margin-left: -15rem; /* Hidden by default on small screens */
+    transition: margin 0.25s ease-out;
+    width: 15rem;
+    background-color: var(--color-surface);
+}
+
+/* Sidebar Branding */
+.sidebar-heading {
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* Sidebar Links */
+.list-group-item {
+    border: none;
+    border-radius: 0;
+    font-weight: 500;
+    color: #495057;
+    transition: all 0.2s ease;
+}
+.list-group-item.active {
+    background-color: var(--color-primary) !important;
+    color: var(--color-surface) !important;
+    border-left: 5px solid var(--color-secondary);
+}
+.list-group-item:hover {
+    background-color: #f0f3f6;
+    color: var(--color-primary);
+}
+
+/* Page Content Wrapper & Toggle Logic */
+#page-content-wrapper {
+    min-width: 100vw;
+}
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+}
+
+/* Dashboard Media Query (Desktop View) */
+@media (min-width: 992px) {
+    #sidebar-wrapper { margin-left: 0; }
+    #page-content-wrapper { min-width: 0; width: 100%; }
+    #wrapper.toggled #sidebar-wrapper { margin-left: -15rem; }
+}
+
+/* Dashboard Specific Content Styles */
+.dashboard-header {
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-border);
+    margin-bottom: 25px;
+}
+.dashboard-title {
+    font-weight: 700;
+    color: var(--color-text-dark);
+}
+.highlight-text {
+    color: var(--color-primary);
+}
+
+/* Dashboard Cards */
+.info-card {
+    background-color: var(--color-surface);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+.info-card .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* Card Borders */
+.primary-card { border-left-color: var(--color-primary) !important; }
+.secondary-card { border-left-color: var(--color-secondary) !important; }
+
+/* Quick Actions Button Styling */
+.btn-outline-dark:hover {
+    background-color: var(--color-primary);
+    color: var(--color-surface) !important;
+    border-color: var(--color-primary);
+}

@@ -1,0 +1,99 @@
+/* =======================================
+ * SecurePortal Theme - Authentication Pages (login-style.css)
+ * Used by user_login.html and user_signup.html
+ * ======================================= */
+
+/* Theme Colors */
+:root {
+    --color-primary: #4B0082; /* Indigo/Violet */
+    --color-secondary: #FF8C00; /* Dark Orange */
+    --color-background: #f0f2f5;
+    --color-surface: #ffffff;
+    --color-text-muted: #6c757d;
+}
+
+/* General Setup */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    overflow-x: hidden; /* Ensure no horizontal scrolling */
+}
+
+/* Background (Subtle Gradient) */
+.login-container {
+    background: linear-gradient(135deg, var(--color-background) 0%, #e8edf3 50%, #d8e0e8 100%);
+    /* FIX: Allow vertical scrolling for long forms */
+    min-height: 100vh; /* Ensure the background covers at least the viewport */
+    padding-top: 2rem; /* Add space at the top when scrolling */
+    padding-bottom: 2rem; /* Add space at the bottom when scrolling */
+}
+
+/* Login Card Styling */
+.login-card {
+    max-width: 450px;
+    width: 90%; /* Responsive width for mobile */
+    background-color: var(--color-surface);
+    border: none;
+    transition: transform 0.3s ease;
+}
+
+.login-card:hover {
+    transform: translateY(-5px); /* Subtle lift on hover */
+}
+
+/* Branding Font Style (Gradient) */
+.brand-logo {
+    font-size: 2.5rem;
+    font-weight: 800;
+    /* Gradient: Indigo to Dark Orange */
+    background: linear-gradient(to right, var(--color-primary), var(--color-secondary)); 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Form Input Styling */
+.input-group-text {
+    background-color: #f8f9fa;
+    border-right: none;
+    color: var(--color-text-muted);
+}
+
+.form-control {
+    border-left: none;
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+}
+
+.form-control:focus {
+    /* Focus ring matches brand color (primary) */
+    box-shadow: 0 0 0 0.25rem rgba(75, 0, 130, 0.25); 
+    border-color: var(--color-primary);
+}
+
+/* Login Button Styling (Primary Action) */
+.btn-login {
+    background-color: var(--color-primary); /* Indigo/Violet background */
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+    background-color: var(--color-secondary); /* Dark Orange hover */
+    box-shadow: 0 4px 10px rgba(255, 140, 0, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Link Styles */
+.forgot-link, .signup-link {
+    color: var(--color-primary);
+    font-weight: 500;
+}
+
+.forgot-link:hover, .signup-link:hover {
+    color: var(--color-secondary);
+}
