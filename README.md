@@ -97,13 +97,13 @@ The application will be available at `http://127.0.0.1:8000/`.
 
 | Feature | URL | URL Name (for `{% url %}` tag) |
 | :--- | :--- | :--- |
-| **Admin Login** | `/admin/login/` | `admin_login` |
-| **Admin Logout** | `/admin/logout/` | `admin_logout` |
-| **User List (Management)** | `/controlpanel/users/` | `admin_users` |
-| **Add New User** | `/controlpanel/users/add/` | `admin_user_add` |
-| **View/Profile** | `/controlpanel/users/<pk>/` | `admin_user_profile` |
-| **Edit User** | `/controlpanel/users/edit/<pk>/` | `admin_user_edit` |
-| **Delete User** | `/controlpanel/users/<pk>/delete/` | `admin_user_delete` |
+| **Admin Login** | `/controlpanel/login/` | `admin_login` |
+| **Admin Logout** | `/controlpanel/logout/` | `admin_logout` |
+| **User List (Management)** | `/controlpanel/users/` | `users` |
+| **Add New User** | `/controlpanel/users/add/` | `add_user` |
+| **View/Profile** | `/controlpanel/users/<pk>/` | `profile` |
+| **Edit User** | `/controlpanel/users/edit/<pk>/` | `user_edit` |
+| **Delete User** | `/controlpanel/users/<pk>/delete/` | `user_delete` |
 
 -----
 
