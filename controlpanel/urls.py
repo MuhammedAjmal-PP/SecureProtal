@@ -16,7 +16,7 @@ urlpatterns = [
     path("", dashboard_view, name="admin_dashboard"),
     path("users", usersmanagement_view, name="users"),
     path("users/<int:pk>/", user_profile_view, name="profile"),
-    path("usercreation/", admin_user_add, name="add_user"),
+    path("user/add", admin_user_add, name="add_user"),
     path("users/edit/<int:pk>/", user_edit_view, name="user_edit"),
     path("users/<int:pk>/delete/", user_delete_view, name="user_delete"),
 ]
