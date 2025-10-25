@@ -146,17 +146,3 @@ LOGOUT_REDIRECT_URL = "login"
 # The value is in seconds. (30 minutes * 60 seconds/minute = 1800)
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 1800
-
-# If set to True, session age resets with every request (sliding expiration)
-# If False, the session always expires after SESSION_COOKIE_AGE seconds regardless of activity.
-SESSION_SAVE_EVERY_REQUEST = True
-
-
-# Ensures the cookie can only be accessed via HTTP(S) protocol, not JavaScript.
-SESSION_COOKIE_HTTPONLY = True 
-
-# Ensures the cookie is only sent over HTTPS connections (VITAL for production)
-SESSION_COOKIE_SECURE = False # Set to True in production!
-
-# Prevents the cookie from being sent in cross-site requests (CSRF protection)
-SESSION_COOKIE_SAMESITE = 'Lax'
